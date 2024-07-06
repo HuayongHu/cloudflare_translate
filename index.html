@@ -1,0 +1,274 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>翻译工具</title>  
+</head>  
+<body>  
+    <h1>翻译工具</h1>  
+    <input type="text" id="text" placeholder="输入要翻译的文本">  
+    <select id="source_language">  
+<option value="zh">中文</option> 
+<option value="en">英语</option>  
+<!-- A 开头的语言 -->  
+<option value="af">阿非利卡语</option>  
+<option value="am">阿姆哈拉语</option>  
+<option value="ar">阿拉伯语</option>  
+<option value="ast">阿斯图里亚斯语</option>  
+<option value="az">阿塞拜疆语</option>  
+<!-- B 开头的语言 -->  
+<option value="ba">巴什基尔语</option>  
+<option value="be">白俄罗斯语</option>  
+<option value="bg">保加利亚语</option>  
+<option value="bn">孟加拉语</option>  
+<option value="br">布列塔尼语</option>  
+<option value="bs">波斯尼亚语</option>  
+<!-- C 开头的语言 -->  
+<option value="ca">加泰罗尼亚语</option>  
+<option value="ceb">宿务语</option>  
+<option value="cs">捷克语</option>  
+<option value="cy">威尔士语</option>  
+<!-- D 开头的语言 -->  
+<option value="da">丹麦语</option>  
+<option value="de">德语</option>  
+<!-- E 开头的语言 -->  
+<option value="el">希腊语</option>  
+<option value="en">英语</option>  
+<option value="es">西班牙语</option>  
+<option value="et">爱沙尼亚语</option>  
+<!-- F 开头的语言 -->  
+<option value="fa">波斯语</option>  
+<option value="ff">富拉语</option>  
+<option value="fi">芬兰语</option>  
+<option value="fr">法语</option>  
+<option value="fy">西弗里西亚语</option>  
+<!-- G 开头的语言 -->  
+<option value="ga">爱尔兰语</option>  
+<option value="gd">苏格兰盖尔语</option>  
+<option value="gl">加利西亚语</option>  
+<option value="gu">古吉拉特语</option>  
+<!-- H 开头的语言 -->  
+<option value="ha">豪萨语</option>  
+<option value="he">希伯来语</option>  
+<option value="hi">印地语</option>  
+<option value="hr">克罗地亚语</option>  
+<option value="ht">海地克里奥尔语</option>  
+<option value="hu">匈牙利语</option>  
+<!-- I 开头的语言 -->  
+<option value="hy">亚美尼亚语</option>  
+<option value="id">印度尼西亚语</option>  
+<option value="ig">伊博语</option>  
+<option value="ilo">伊洛卡诺语</option>  
+<option value="is">冰岛语</option>  
+<option value="it">意大利语</option>  
+<!-- J 开头的语言 -->  
+<option value="ja">日语</option>  
+<option value="jv">爪哇语</option>  
+<!-- K 开头的语言 -->  
+<option value="ka">格鲁吉亚语</option>  
+<option value="kk">哈萨克语</option>  
+<option value="km">中央高棉语</option>  
+<option value="kn">卡纳达语</option>  
+<option value="ko">韩语</option>  
+<!-- L 开头的语言 -->  
+<option value="lb">卢森堡语</option>  
+<option value="lg">甘达语</option>  
+<option value="ln">林加拉语</option>  
+<option value="lo">老挝语</option>  
+<option value="lt">立陶宛语</option>  
+<option value="lv">拉脱维亚语</option>  
+<!-- M 开头的语言 -->  
+<option value="mg">马达加斯加语</option>  
+<option value="mk">马其顿语</option>  
+<option value="ml">马拉雅拉姆语</option>  
+<option value="mn">蒙古语</option>  
+<option value="mr">马拉地语</option>  
+<option value="ms">马来语</option>  
+<option value="my">缅甸语</option>  
+<!-- N 开头的语言 -->  
+<option value="ne">尼泊尔语</option>  
+<option value="nl">荷兰语</option>  
+<option value="no">挪威语</option>  
+<option value="ns">北索托语</option> 
+<option value="or">奥里亚语</option> 
+<option value="pa">旁遮普语</option> 
+<option value="pl">波兰语</option> 
+<option value="ps">普什图语</option>
+<!-- O 开头的语言 -->  
+<option value="oc">奥克西塔尼语</option>
+<!-- P 开头的语言 -->
+<option value="pt">葡萄牙语</option> 
+<option value="ro">罗马尼亚语</option> 
+<!-- R 开头的语言 --> 
+<option value="ru">俄语</option> 
+<!-- S 开头的语言 --> 
+<option value="sd">信德语</option> 
+<option value="si">僧伽罗语</option> 
+<option value="sk">斯洛伐克语</option>
+<option value="sl">斯洛文尼亚语</option>
+<option value="so">索马里语</option> 
+<option value="sq">阿尔巴尼亚语</option> 
+<option value="sr">塞尔维亚语</option> 
+<option value="ss">斯瓦蒂语</option>
+<option value="su">巽他语</option> 
+<option value="sv">瑞典语</option>
+<option value="sw">斯瓦希里语</option> 
+<!-- T 开头的语言 --> 
+<option value="ta">泰米尔语</option> 
+<option value="th">泰语</option> 
+<option value="tl">他加禄语</option>
+<option value="tn">茨瓦纳语</option>
+<option value="tr">土耳其语</option>
+<!-- U 开头的语言 -->
+<option value="uk">乌克兰语</option>
+<option value="ur">乌尔都语</option>
+<option value="uz">乌兹别克语</option>
+<!-- V 开头的语言 --> 
+<option value="vi">越南语</option> 
+<!-- W 开头的语言 --> 
+<option value="wo">沃洛夫语</option> 
+<!-- X 开头的语言 --> 
+<option value="xh">科萨语</option>
+<!-- Y 开头的语言 --> 
+<option value="yi">依地语</option> 
+<option value="yo">约鲁巴语</option>  
+<!-- Z 开头的语言 --> 
+<option value="zh">中文</option> 
+<option value="zu">祖鲁语</option> 
+    </select>  
+    <select id="target_language">  
+<option value="zh">中文</option> 
+<option value="en">英语</option>  
+<!-- A 开头的语言 -->  
+<option value="af">阿非利卡语</option>  
+<option value="am">阿姆哈拉语</option>  
+<option value="ar">阿拉伯语</option>  
+<option value="ast">阿斯图里亚斯语</option>  
+<option value="az">阿塞拜疆语</option>  
+<!-- B 开头的语言 -->  
+<option value="ba">巴什基尔语</option>  
+<option value="be">白俄罗斯语</option>  
+<option value="bg">保加利亚语</option>  
+<option value="bn">孟加拉语</option>  
+<option value="br">布列塔尼语</option>  
+<option value="bs">波斯尼亚语</option>  
+<!-- C 开头的语言 -->  
+<option value="ca">加泰罗尼亚语</option>  
+<option value="ceb">宿务语</option>  
+<option value="cs">捷克语</option>  
+<option value="cy">威尔士语</option>  
+<!-- D 开头的语言 -->  
+<option value="da">丹麦语</option>  
+<option value="de">德语</option>  
+<!-- E 开头的语言 -->  
+<option value="el">希腊语</option>  
+<option value="en">英语</option>  
+<option value="es">西班牙语</option>  
+<option value="et">爱沙尼亚语</option>  
+<!-- F 开头的语言 -->  
+<option value="fa">波斯语</option>  
+<option value="ff">富拉语</option>  
+<option value="fi">芬兰语</option>  
+<option value="fr">法语</option>  
+<option value="fy">西弗里西亚语</option>  
+<!-- G 开头的语言 -->  
+<option value="ga">爱尔兰语</option>  
+<option value="gd">苏格兰盖尔语</option>  
+<option value="gl">加利西亚语</option>  
+<option value="gu">古吉拉特语</option>  
+<!-- H 开头的语言 -->  
+<option value="ha">豪萨语</option>  
+<option value="he">希伯来语</option>  
+<option value="hi">印地语</option>  
+<option value="hr">克罗地亚语</option>  
+<option value="ht">海地克里奥尔语</option>  
+<option value="hu">匈牙利语</option>  
+<!-- I 开头的语言 -->  
+<option value="hy">亚美尼亚语</option>  
+<option value="id">印度尼西亚语</option>  
+<option value="ig">伊博语</option>  
+<option value="ilo">伊洛卡诺语</option>  
+<option value="is">冰岛语</option>  
+<option value="it">意大利语</option>  
+<!-- J 开头的语言 -->  
+<option value="ja">日语</option>  
+<option value="jv">爪哇语</option>  
+<!-- K 开头的语言 -->  
+<option value="ka">格鲁吉亚语</option>  
+<option value="kk">哈萨克语</option>  
+<option value="km">中央高棉语</option>  
+<option value="kn">卡纳达语</option>  
+<option value="ko">韩语</option>  
+<!-- L 开头的语言 -->  
+<option value="lb">卢森堡语</option>  
+<option value="lg">甘达语</option>  
+<option value="ln">林加拉语</option>  
+<option value="lo">老挝语</option>  
+<option value="lt">立陶宛语</option>  
+<option value="lv">拉脱维亚语</option>  
+<!-- M 开头的语言 -->  
+<option value="mg">马达加斯加语</option>  
+<option value="mk">马其顿语</option>  
+<option value="ml">马拉雅拉姆语</option>  
+<option value="mn">蒙古语</option>  
+<option value="mr">马拉地语</option>  
+<option value="ms">马来语</option>  
+<option value="my">缅甸语</option>  
+<!-- N 开头的语言 -->  
+<option value="ne">尼泊尔语</option>  
+<option value="nl">荷兰语</option>  
+<option value="no">挪威语</option>  
+<option value="ns">北索托语</option> 
+<option value="or">奥里亚语</option> 
+<option value="pa">旁遮普语</option> 
+<option value="pl">波兰语</option> 
+<option value="ps">普什图语</option>
+<!-- O 开头的语言 -->  
+<option value="oc">奥克西塔尼语</option>
+<!-- P 开头的语言 -->
+<option value="pt">葡萄牙语</option> 
+<option value="ro">罗马尼亚语</option> 
+<!-- R 开头的语言 --> 
+<option value="ru">俄语</option> 
+<!-- S 开头的语言 --> 
+<option value="sd">信德语</option> 
+<option value="si">僧伽罗语</option> 
+<option value="sk">斯洛伐克语</option>
+<option value="sl">斯洛文尼亚语</option>
+<option value="so">索马里语</option> 
+<option value="sq">阿尔巴尼亚语</option> 
+<option value="sr">塞尔维亚语</option> 
+<option value="ss">斯瓦蒂语</option>
+<option value="su">巽他语</option> 
+<option value="sv">瑞典语</option>
+<option value="sw">斯瓦希里语</option> 
+<!-- T 开头的语言 --> 
+<option value="ta">泰米尔语</option> 
+<option value="th">泰语</option> 
+<option value="tl">他加禄语</option>
+<option value="tn">茨瓦纳语</option>
+<option value="tr">土耳其语</option>
+<!-- U 开头的语言 -->
+<option value="uk">乌克兰语</option>
+<option value="ur">乌尔都语</option>
+<option value="uz">乌兹别克语</option>
+<!-- V 开头的语言 --> 
+<option value="vi">越南语</option> 
+<!-- W 开头的语言 --> 
+<option value="wo">沃洛夫语</option> 
+<!-- X 开头的语言 --> 
+<option value="xh">科萨语</option>
+<!-- Y 开头的语言 --> 
+<option value="yi">依地语</option> 
+<option value="yo">约鲁巴语</option>  
+<!-- Z 开头的语言 --> 
+<option value="zh">中文</option> 
+<option value="zu">祖鲁语</option>
+    </select>  
+    <button onclick="translateText()">翻译</button>  
+    <p id="result"></p>  
+  
+    <script src="app.js"></script>  
+</body>  
+</html>
