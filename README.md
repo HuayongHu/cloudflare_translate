@@ -1,0 +1,2 @@
+# cloudflare_translate
+利用cloudflare的workers搭建一个翻译的api及简单的网页
