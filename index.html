@@ -1,47 +1,65 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>在线翻译</title>  
-    <meta name='description' content='在线翻译,翻译API,Cloudflare,Workers,免费API,免费api,翻译文档'>
-    <style>  
-        body {  
-            font-family: Arial, sans-serif;  
-            margin: 20px;  
-            padding: 0;  
-            display: flex;  
-            flex-direction: column;  
-            align-items: center;  
-        }  
-  
-        .container {  
-            width: 100%;  
-            max-width: 600px;  
-            text-align: center;  
-        }  
-  
-        input[type="text"], select, button {  
-            padding: 10px;  
-            margin: 5px;  
-            font-size: 16px;  
-        }  
-  
-        #result {  
-            margin-top: 20px;  
-            padding: 20px;  
-            border: 1px solid #ccc;  
-            border-radius: 5px;  
-            min-height: 100px;  
-        }  
-    </style>  
-</head>  
-<body>  
-  
-<div class="container">  
-    <h1>在线翻译</h1>  
-    <input type="text" id="inputText" placeholder="输入要翻译的文本">  
-    <select id="sourceLanguage">  
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线翻译</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f7f7;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], select, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+            background-color: #fcfcfc;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #333;">Cloudflare在线翻译</h1>
+        <input type="text" id="inputText" placeholder="输入要翻译的文本" style="width: 80%;">
+        <select id="sourceLanguage" style="width: 40%;">
+            <!-- 语言选项 -->
 <option value="zh">中文</option> 
 <option value="en">英语</option>  
 <!-- A 开头的语言 -->  
@@ -169,9 +187,8 @@
 <!-- Z 开头的语言 --> 
 <option value="zh">中文</option> 
 <option value="zu">祖鲁语</option> 
-    </select> 
--->
-    <select id="targetLanguage">  
+        </select>
+        <select id="targetLanguage" style="width: 40%;">
 <option value="zh">中文</option> 
 <option value="en">英语</option>  
 <!-- A 开头的语言 -->  
@@ -298,13 +315,11 @@
 <option value="yo">约鲁巴语</option>  
 <!-- Z 开头的语言 --> 
 <option value="zh">中文</option> 
-<option value="zu">祖鲁语</option> 
-    </select>  
-    <button onclick="translateText()">翻译</button>  
-    <div id="result">等待翻译结果...</div>  
-</div>  
-  
-<!-- JavaScript代码将放在这里 -->  
+<option value="zu">祖鲁语</option>  
+        </select>
+        <button onclick="translateText()">翻译</button>
+        <div id="result">等待翻译结果...</div>
+    </div>
 <script>  
 function translateText() {  
     const inputText = document.getElementById('inputText').value;  
@@ -327,6 +342,5 @@ function translateText() {
         });  
 }  
 </script>
-  
-</body>  
+</body>
 </html>
