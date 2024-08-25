@@ -2,65 +2,106 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-     <meta name='description' content='免费翻译,在线翻译,翻译,translate，AI,大模型,人工智能,语音识别'>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="免费翻译,在线翻译,翻译,translate,AI,大模型,人工智能,语音识别">
     <title>在线翻译</title>
     <meta name="msvalidate.01" content="C6B7DCA920BD89C3122D6D27F520FDFD" />
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            margin: 20px;
+            margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            background-color: #f7f7f7;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
         }
+
         .container {
             width: 100%;
             max-width: 600px;
-            text-align: center;
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
         input[type="text"], select, button {
-            padding: 10px;
-            margin: 5px;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
             font-size: 16px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
         }
+
+        input[type="text"]:focus, select:focus, button:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+        }
+
         button {
-            background-color: #5cb85c;
+            background-color: #2575fc;
             color: white;
             cursor: pointer;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
         }
+
         button:hover {
-            background-color: #4cae4c;
+            background-color: #1a5ecb;
+            transform: translateY(-2px);
         }
+
+        button:active {
+            transform: translateY(0);
+        }
+
         #result {
             margin-top: 20px;
             padding: 20px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
+            background-color: #f7f7f7;
             min-height: 100px;
-            background-color: #fcfcfc;
+            font-size: 16px;
+            color: #333;
         }
+
         @media (max-width: 600px) {
             .container {
-                width: 95%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="text"], select, button {
+                font-size: 14px;
+            }
+
+            #result {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 style="color: #333;">在线翻译</h1>
-        <input type="text" id="inputText" placeholder="输入要翻译的文本" style="width: 80%;">
-        <select id="sourceLanguage" style="width: 40%;">
+        <h1>在线翻译</h1>
+        <input type="text" id="inputText" placeholder="输入要翻译的文本">
+        <select id="sourceLanguage">
             <!-- 语言选项 -->
 <option value="zh">中文</option> 
 <option value="en">英语</option>  
@@ -188,9 +229,9 @@
 <option value="yo">约鲁巴语</option>  
 <!-- Z 开头的语言 --> 
 <option value="zh">中文</option> 
-<option value="zu">祖鲁语</option> 
+<option value="zu">祖鲁语</option>  
         </select>
-        <select id="targetLanguage" style="width: 40%;">
+        <select id="targetLanguage">
 <option value="zh">中文</option> 
 <option value="en">英语</option>  
 <!-- A 开头的语言 -->  
@@ -322,27 +363,27 @@
         <button onclick="translateText()">翻译</button>
         <div id="result">等待翻译结果...</div>
     </div>
-<script>  
-function translateText() {  
-    const inputText = document.getElementById('inputText').value;  
-    const sourceLanguage = document.getElementById('sourceLanguage').value;  
-    const targetLanguage = document.getElementById('targetLanguage').value;  
-    const secret = '123456'; // 你的API密钥，确保不要在客户端硬编码，应通过后端获取  
-  
-    fetch(`https://translateapi.011102.xyz/?text=${encodeURIComponent(inputText)}&source_language=${sourceLanguage}&target_language=${targetLanguage}&secret=${secret}`)  
-        .then(response => response.json())  
-        .then(data => {  
-            if (data.code === 0 && data.msg === 'ok') {  
-                document.getElementById('result').textContent = data.text;  
-            } else {  
-                alert('翻译失败：' + data.msg);  
-            }  
-        })  
-        .catch(error => {  
-            console.error('请求翻译API时发生错误：', error);  
-            alert('请求翻译API时发生错误，请稍后再试。');  
-        });  
-}  
+<script>
+function translateText() {
+    const inputText = document.getElementById('inputText').value;
+    const sourceLanguage = document.getElementById('sourceLanguage').value;
+    const targetLanguage = document.getElementById('targetLanguage').value;
+    const secret = '123456'; // 你的API密钥，确保不要在客户端硬编码，应通过后端获取
+
+    fetch(`https://translateapi.011102.xyz/?text=${encodeURIComponent(inputText)}&source_language=${sourceLanguage}&target_language=${targetLanguage}&secret=${secret}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0 && data.msg === 'ok') {
+                document.getElementById('result').textContent = data.text;
+            } else {
+                alert('翻译失败：' + data.msg);
+            }
+        })
+        .catch(error => {
+            console.error('请求翻译API时发生错误：', error);
+            alert('请求翻译API时发生错误，请稍后再试。');
+        });
+}
 </script>
 </body>
 </html>
