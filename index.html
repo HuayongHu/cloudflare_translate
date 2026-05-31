@@ -3,324 +3,426 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>在线翻译</title>
-  
-  <!-- 引入 Google 官方字体 Roboto -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- 图标库 -->
+  <meta name="description" content="免费翻译,在线翻译,翻译,translate,AI,大模型,人工智能,语音识别">
+  <title>翻译 - Apple Style</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
   <style>
-    /* ─── Google Material Design 变量 ─── */
+    /* ─── Apple HIG 官方色值与全局变量 ─── */
     :root {
-      --google-blue: #1a73e8;
-      --google-blue-hover: #1b66c9;
-      --surface-bg: #f8f9fa;       /* 页面浅灰底色 */
-      --card-bg: #ffffff;          /* 左侧面板纯白 */
-      --card-bg-alt: #f5f5f5;      /* 右侧面板浅灰 (经典Google翻译设定) */
-      --border-color: #dadce0;     /* 极细的线框灰 */
+      --apple-bg: #F2F2F7;         /* iOS/iPadOS 系统标准底层灰 */
+      --apple-card: #FFFFFF;       /* 卡片纯白 */
+      --apple-blue: #007AFF;       /* 经典 iOS 蓝 */
+      --apple-blue-active: #005ecb;
       
-      --text-primary: #202124;     /* 正文黑 */
-      --text-secondary: #5f6368;   /* 辅助灰 */
+      --text-primary: #1D1D1F;     /* Apple 专属深色文字 (不是纯黑) */
+      --text-secondary: #8E8E93;   /* 系统次级灰 */
       
-      --hover-bg: rgba(60,64,67,0.08); /* 悬停时的圆形阴影 */
+      --control-bg: #E5E5EA;       /* 控件背景灰 */
+      --control-bg-hover: #D1D1D6;
+      
+      --border-radius-lg: 24px;    /* 卡片大圆角 */
+      --border-radius-md: 14px;    /* 按钮中圆角 */
+      --border-radius-sm: 10px;    /* 小元素圆角 */
+      
+      --divider: rgba(60, 60, 67, 0.12); /* 苹果标准分割线颜色 */
     }
 
     *, *::before, *::after {
       margin: 0; padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
     }
 
     body {
-      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
-      background-color: var(--surface-bg);
+      /* 调用苹果系统原生字体 San Francisco */
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: var(--apple-bg);
       color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ─── 顶部应用栏 (App Bar) ─── */
-    .app-bar {
-      height: 64px;
-      background-color: #ffffff;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      gap: 16px;
-    }
-
-    .menu-icon {
-      color: var(--text-secondary);
-      font-size: 18px;
-      width: 48px;
-      height: 48px;
+    /* ─── 毛玻璃导航栏 (macOS / iOS 风格) ─── */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid var(--divider);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%;
-      cursor: pointer;
+      z-index: 100;
     }
-    .menu-icon:hover { background-color: var(--hover-bg); }
 
-    .logo {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .nav-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
-    .logo i { color: var(--google-blue); font-size: 24px; }
 
-    /* ─── 主体工具区 ─── */
-    .main-workspace {
+    /* ─── 主工作区 ─── */
+    .workspace {
       flex: 1;
       width: 100%;
-      max-width: 1280px;
+      max-width: 1060px;
       margin: 0 auto;
-      padding: 32px 24px;
+      padding: 40px 20px;
     }
 
-    /* 翻译主面板卡片 */
-    .translate-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      box-shadow: 0 1px 3px 0 rgba(60,64,67,0.1), 0 4px 8px 3px rgba(60,64,67,0.05); /* Material 经典阴影 */
+    /* ─── 核心翻译卡片 ─── */
+    .translate-container {
+      background: var(--apple-card);
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0,0,0,0.02); /* Apple 标志性的柔和深景深阴影 */
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    /* ─── 语言控制栏 ─── */
-    .controls-row {
+    /* ─── 顶部语言控制栏 (类似 iPadOS 标签页) ─── */
+    .lang-header {
       display: flex;
       align-items: center;
-      height: 48px;
-      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      border-bottom: 0.5px solid var(--divider);
+      background: rgba(255, 255, 255, 0.9);
     }
 
-    .lang-section {
+    .lang-wrapper {
       flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
+      position: relative;
     }
 
-    .lang-section select {
+    /* 苹果风格的下拉菜单 */
+    select {
       appearance: none;
       -webkit-appearance: none;
-      background: transparent;
+      width: 100%;
+      background: var(--apple-bg);
       border: none;
       outline: none;
-      color: var(--google-blue);
+      color: var(--apple-blue);
       font-family: inherit;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 8px 24px 8px 12px;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--border-radius-sm);
       cursor: pointer;
-      text-transform: uppercase;
-      /* 蓝色下拉箭头 */
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%231a73e8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 6px center;
-      border-radius: 4px;
+      text-align: center;
+      text-align-last: center; /* 确保选中文字居中 */
+      transition: background 0.2s;
     }
 
-    .lang-section select:hover {
-      background-color: rgba(26,115,232,0.04);
+    select:hover {
+      background: var(--control-bg);
+    }
+
+    /* 自定义下拉箭头 */
+    .lang-wrapper::after {
+      content: '\f0dc'; /* FontAwesome sort icon as arrows */
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--apple-blue);
+      font-size: 12px;
+      pointer-events: none;
     }
 
     .swap-btn {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
+      margin: 0 16px;
       border-radius: 50%;
       border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      font-size: 16px;
+      background: var(--control-bg);
+      color: var(--text-primary);
+      font-size: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.2s;
+      transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    .swap-btn:hover { background-color: var(--hover-bg); }
+    .swap-btn:active {
+      transform: scale(0.92);
+      background: var(--control-bg-hover);
+    }
 
     /* ─── 文本输入输出区 ─── */
-    .text-panels {
+    .panels {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 240px;
+      min-height: 320px;
     }
 
     .panel {
       display: flex;
       flex-direction: column;
+      padding: 24px;
       position: relative;
     }
 
     .panel-left {
-      background-color: var(--card-bg);
+      border-right: 0.5px solid var(--divider);
     }
 
-    .panel-right {
-      background-color: var(--card-bg-alt);
-      border-left: 1px solid var(--border-color);
-    }
-
+    /* 苹果翻译 App 喜欢用超大号纤细字体 */
     textarea {
       flex: 1;
       width: 100%;
-      padding: 16px 24px;
       border: none;
       outline: none;
       background: transparent;
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 22px; /* 大字体，类似Google Translate */
-      line-height: 1.5;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -0.015em;
       resize: none;
     }
 
     textarea::placeholder {
-      color: #80868b;
-      font-weight: 400;
+      color: #C7C7CC; /* iOS 标准占位符颜色 */
     }
 
-    /* 右侧翻译结果字体颜色略微加深 */
     #outputText {
-      color: #1f1f1f;
+      color: var(--apple-blue); /* 输出结果用蓝色高亮是 Apple 的常见做法 */
     }
 
-    /* ─── 底部操作栏 ─── */
-    .panel-footer {
+    /* ─── 底部操作工具栏 ─── */
+    .panel-tools {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 16px;
-      height: 56px;
+      margin-top: 16px;
     }
 
-    .action-group {
+    .action-icons {
       display: flex;
-      gap: 4px;
+      gap: 12px;
     }
 
+    /* 圆形毛玻璃按钮隐喻 */
     .icon-btn {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border: none;
       border-radius: 50%;
-      background: transparent;
-      color: var(--text-secondary);
+      background: var(--apple-bg);
+      color: var(--apple-blue);
       cursor: pointer;
-      font-size: 16px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.2s;
+      transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    .icon-btn:hover { background-color: var(--hover-bg); color: var(--text-primary); }
+    .icon-btn:active {
+      transform: scale(0.92);
+      background: var(--control-bg);
+    }
 
     .char-count {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text-secondary);
-      padding-right: 8px;
     }
 
-    /* ─── 翻译主按钮区 ─── */
-    .translate-action-bar {
-      border-top: 1px solid var(--border-color);
-      padding: 16px 24px;
+    /* ─── 主翻译按钮区 ─── */
+    .action-bar {
+      padding: 20px 24px;
+      background: var(--apple-card);
+      border-top: 0.5px solid var(--divider);
       display: flex;
       justify-content: flex-end;
-      background-color: #ffffff;
     }
 
+    /* Apple 大号药丸按钮 */
     .translate-btn {
-      background-color: var(--google-blue);
-      color: white;
+      background-color: var(--apple-blue);
+      color: #FFFFFF;
       border: none;
-      border-radius: 4px; /* Material 经典微圆角 */
-      padding: 0 24px;
-      height: 36px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.25px;
+      border-radius: 20px; /* 药丸形状 */
+      padding: 0 32px;
+      height: 44px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
+      transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    .translate-btn:hover {
-      background-color: var(--google-blue-hover);
-      box-shadow: 0 1px 3px 1px rgba(60,64,67,0.15), 0 1px 2px 0 rgba(60,64,67,0.3);
+    .translate-btn:active {
+      transform: scale(0.95);
+      background-color: var(--apple-blue-active);
     }
 
-    .translate-btn.success { background-color: #188038; } /* Google 绿 */
+    .translate-btn.success {
+      background-color: #34C759; /* iOS 绿色 */
+    }
 
+    /* iOS 风格的加载圈 (简单的 CSS 模拟) */
     .loading-spinner {
       display: none;
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #ffffff;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
+    }
 
-    /* ─── 响应式布局 ─── */
+    /* ─── 隐藏滚动条 (Apple 风格) ─── */
+    ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+    /* ─── 响应式 ─── */
     @media (max-width: 768px) {
-      .text-panels { grid-template-columns: 1fr; }
-      .panel-right { border-left: none; border-top: 1px solid var(--border-color); }
-      textarea { font-size: 18px; min-height: 150px; }
-      .main-workspace { padding: 16px; }
-      .swap-btn { transform: rotate(90deg); }
+      .workspace { padding: 20px 16px; }
+      .panels { grid-template-columns: 1fr; }
+      .panel-left { border-right: none; border-bottom: 0.5px solid var(--divider); }
+      textarea { font-size: 20px; min-height: 160px; }
+      .lang-header { padding: 12px 16px; }
+      .swap-btn { transform: rotate(90deg); margin: 0 8px; }
+      .swap-btn:active { transform: rotate(90deg) scale(0.92); }
+      .translate-btn { width: 100%; justify-content: center; border-radius: 12px;} /* 手机端全宽按钮 */
     }
   </style>
 </head>
 <body>
 
-  <!-- Google 风格的顶部应用栏 -->
-  <header class="app-bar">
-    <div class="menu-icon"><i class="fas fa-bars"></i></div>
-    <div class="logo">
-      <i class="fas fa-language"></i>
-      <span>翻译工具</span>
-    </div>
+  <!-- 仿 iOS 顶栏 -->
+  <header class="nav-bar">
+    <div class="nav-title">翻译</div>
   </header>
 
-  <main class="main-workspace">
-    
-    <!-- 核心翻译卡片 -->
-    <div class="translate-card">
+  <main class="workspace">
+    <div class="translate-container">
       
-      <!-- 顶部：语言选择 -->
-      <div class="controls-row">
-        <div class="lang-section">
+      <!-- 顶部：语言选择 (iPadOS 风格) -->
+      <div class="lang-header">
+        <div class="lang-wrapper">
           <select id="sourceLanguage">
             <option value="zh">中文</option>
             <option value="en">英语</option>
-            <option value="ja">日语</option>
-            <option value="ko">韩语</option>
-            <option value="fr">法语</option>
+            <option value="af">阿非利卡语</option>
+            <option value="am">阿姆哈拉语</option>
+            <option value="ar">阿拉伯语</option>
+            <option value="ast">阿斯图里亚斯语</option>
+            <option value="az">阿塞拜疆语</option>
+            <option value="ba">巴什基尔语</option>
+            <option value="be">白俄罗斯语</option>
+            <option value="bg">保加利亚语</option>
+            <option value="bn">孟加拉语</option>
+            <option value="br">布列塔尼语</option>
+            <option value="bs">波斯尼亚语</option>
+            <option value="ca">加泰罗尼亚语</option>
+            <option value="ceb">宿务语</option>
+            <option value="cs">捷克语</option>
+            <option value="cy">威尔士语</option>
+            <option value="da">丹麦语</option>
             <option value="de">德语</option>
+            <option value="el">希腊语</option>
             <option value="es">西班牙语</option>
+            <option value="et">爱沙尼亚语</option>
+            <option value="fa">波斯语</option>
+            <option value="ff">富拉语</option>
+            <option value="fi">芬兰语</option>
+            <option value="fr">法语</option>
+            <option value="fy">西弗里西亚语</option>
+            <option value="ga">爱尔兰语</option>
+            <option value="gd">苏格兰盖尔语</option>
+            <option value="gl">加利西亚语</option>
+            <option value="gu">古吉拉特语</option>
+            <option value="ha">豪萨语</option>
+            <option value="he">希伯来语</option>
+            <option value="hi">印地语</option>
+            <option value="hr">克罗地亚语</option>
+            <option value="ht">海地克里奥尔语</option>
+            <option value="hu">匈牙利语</option>
+            <option value="hy">亚美尼亚语</option>
+            <option value="id">印度尼西亚语</option>
+            <option value="ig">伊博语</option>
+            <option value="ilo">伊洛卡诺语</option>
+            <option value="is">冰岛语</option>
+            <option value="it">意大利语</option>
+            <option value="ja">日语</option>
+            <option value="jv">爪哇语</option>
+            <option value="ka">格鲁吉亚语</option>
+            <option value="kk">哈萨克语</option>
+            <option value="km">中央高棉语</option>
+            <option value="kn">卡纳达语</option>
+            <option value="ko">韩语</option>
+            <option value="lb">卢森堡语</option>
+            <option value="lg">甘达语</option>
+            <option value="ln">林加拉语</option>
+            <option value="lo">老挝语</option>
+            <option value="lt">立陶宛语</option>
+            <option value="lv">拉脱维亚语</option>
+            <option value="mg">马达加斯加语</option>
+            <option value="mk">马其顿语</option>
+            <option value="ml">马拉雅拉姆语</option>
+            <option value="mn">蒙古语</option>
+            <option value="mr">马拉地语</option>
+            <option value="ms">马来语</option>
+            <option value="my">缅甸语</option>
+            <option value="ne">尼泊尔语</option>
+            <option value="nl">荷兰语</option>
+            <option value="no">挪威语</option>
+            <option value="ns">北索托语</option>
+            <option value="oc">奥克西塔尼语</option>
+            <option value="or">奥里亚语</option>
+            <option value="pa">旁遮普语</option>
+            <option value="pl">波兰语</option>
+            <option value="ps">普什图语</option>
+            <option value="pt">葡萄牙语</option>
+            <option value="ro">罗马尼亚语</option>
             <option value="ru">俄语</option>
-            <!-- 在此处粘贴您原始的全部 option 列表 -->
+            <option value="sd">信德语</option>
+            <option value="si">僧伽罗语</option>
+            <option value="sk">斯洛伐克语</option>
+            <option value="sl">斯洛文尼亚语</option>
+            <option value="so">索马里语</option>
+            <option value="sq">阿尔巴尼亚语</option>
+            <option value="sr">塞尔维亚语</option>
+            <option value="ss">斯瓦蒂语</option>
+            <option value="su">巽他语</option>
+            <option value="sv">瑞典语</option>
+            <option value="sw">斯瓦希里语</option>
+            <option value="ta">泰米尔语</option>
+            <option value="th">泰语</option>
+            <option value="tl">他加禄语</option>
+            <option value="tn">茨瓦纳语</option>
+            <option value="tr">土耳其语</option>
+            <option value="uk">乌克兰语</option>
+            <option value="ur">乌尔都语</option>
+            <option value="uz">乌兹别克语</option>
+            <option value="vi">越南语</option>
+            <option value="wo">沃洛夫语</option>
+            <option value="xh">科萨语</option>
+            <option value="yi">依地语</option>
+            <option value="yo">约鲁巴语</option>
+            <option value="zu">祖鲁语</option>
           </select>
         </div>
 
@@ -328,29 +430,119 @@
           <i class="fas fa-exchange-alt"></i>
         </button>
 
-        <div class="lang-section">
+        <div class="lang-wrapper">
           <select id="targetLanguage">
             <option value="en">英语</option>
             <option value="zh">中文</option>
-            <option value="ja">日语</option>
-            <option value="ko">韩语</option>
-            <option value="fr">法语</option>
+            <option value="af">阿非利卡语</option>
+            <option value="am">阿姆哈拉语</option>
+            <option value="ar">阿拉伯语</option>
+            <option value="ast">阿斯图里亚斯语</option>
+            <option value="az">阿塞拜疆语</option>
+            <option value="ba">巴什基尔语</option>
+            <option value="be">白俄罗斯语</option>
+            <option value="bg">保加利亚语</option>
+            <option value="bn">孟加拉语</option>
+            <option value="br">布列塔尼语</option>
+            <option value="bs">波斯尼亚语</option>
+            <option value="ca">加泰罗尼亚语</option>
+            <option value="ceb">宿务语</option>
+            <option value="cs">捷克语</option>
+            <option value="cy">威尔士语</option>
+            <option value="da">丹麦语</option>
             <option value="de">德语</option>
+            <option value="el">希腊语</option>
             <option value="es">西班牙语</option>
+            <option value="et">爱沙尼亚语</option>
+            <option value="fa">波斯语</option>
+            <option value="ff">富拉语</option>
+            <option value="fi">芬兰语</option>
+            <option value="fr">法语</option>
+            <option value="fy">西弗里西亚语</option>
+            <option value="ga">爱尔兰语</option>
+            <option value="gd">苏格兰盖尔语</option>
+            <option value="gl">加利西亚语</option>
+            <option value="gu">古吉拉特语</option>
+            <option value="ha">豪萨语</option>
+            <option value="he">希伯来语</option>
+            <option value="hi">印地语</option>
+            <option value="hr">克罗地亚语</option>
+            <option value="ht">海地克里奥尔语</option>
+            <option value="hu">匈牙利语</option>
+            <option value="hy">亚美尼亚语</option>
+            <option value="id">印度尼西亚语</option>
+            <option value="ig">伊博语</option>
+            <option value="ilo">伊洛卡诺语</option>
+            <option value="is">冰岛语</option>
+            <option value="it">意大利语</option>
+            <option value="ja">日语</option>
+            <option value="jv">爪哇语</option>
+            <option value="ka">格鲁吉亚语</option>
+            <option value="kk">哈萨克语</option>
+            <option value="km">中央高棉语</option>
+            <option value="kn">卡纳达语</option>
+            <option value="ko">韩语</option>
+            <option value="lb">卢森堡语</option>
+            <option value="lg">甘达语</option>
+            <option value="ln">林加拉语</option>
+            <option value="lo">老挝语</option>
+            <option value="lt">立陶宛语</option>
+            <option value="lv">拉脱维亚语</option>
+            <option value="mg">马达加斯加语</option>
+            <option value="mk">马其顿语</option>
+            <option value="ml">马拉雅拉姆语</option>
+            <option value="mn">蒙古语</option>
+            <option value="mr">马拉地语</option>
+            <option value="ms">马来语</option>
+            <option value="my">缅甸语</option>
+            <option value="ne">尼泊尔语</option>
+            <option value="nl">荷兰语</option>
+            <option value="no">挪威语</option>
+            <option value="ns">北索托语</option>
+            <option value="oc">奥克西塔尼语</option>
+            <option value="or">奥里亚语</option>
+            <option value="pa">旁遮普语</option>
+            <option value="pl">波兰语</option>
+            <option value="ps">普什图语</option>
+            <option value="pt">葡萄牙语</option>
+            <option value="ro">罗马尼亚语</option>
             <option value="ru">俄语</option>
-            <!-- 在此处粘贴您原始的全部 option 列表 -->
+            <option value="sd">信德语</option>
+            <option value="si">僧伽罗语</option>
+            <option value="sk">斯洛伐克语</option>
+            <option value="sl">斯洛文尼亚语</option>
+            <option value="so">索马里语</option>
+            <option value="sq">阿尔巴尼亚语</option>
+            <option value="sr">塞尔维亚语</option>
+            <option value="ss">斯瓦蒂语</option>
+            <option value="su">巽他语</option>
+            <option value="sv">瑞典语</option>
+            <option value="sw">斯瓦希里语</option>
+            <option value="ta">泰米尔语</option>
+            <option value="th">泰语</option>
+            <option value="tl">他加禄语</option>
+            <option value="tn">茨瓦纳语</option>
+            <option value="tr">土耳其语</option>
+            <option value="uk">乌克兰语</option>
+            <option value="ur">乌尔都语</option>
+            <option value="uz">乌兹别克语</option>
+            <option value="vi">越南语</option>
+            <option value="wo">沃洛夫语</option>
+            <option value="xh">科萨语</option>
+            <option value="yi">依地语</option>
+            <option value="yo">约鲁巴语</option>
+            <option value="zu">祖鲁语</option>
           </select>
         </div>
       </div>
 
       <!-- 中间：文本区域 -->
-      <div class="text-panels">
-        
-        <!-- 左侧输入面板 (纯白) -->
+      <div class="panels">
+        <!-- 左侧输入面板 -->
         <div class="panel panel-left">
           <textarea id="inputText" placeholder="输入文字"></textarea>
-          <div class="panel-footer">
-            <div class="action-group">
+          <div class="panel-tools">
+            <div class="action-icons">
               <button class="icon-btn" id="pasteBtn" title="粘贴"><i class="fas fa-paste"></i></button>
               <button class="icon-btn" id="clearInput" title="清除"><i class="fas fa-times"></i></button>
             </div>
@@ -358,26 +550,24 @@
           </div>
         </div>
 
-        <!-- 右侧输出面板 (浅灰) -->
-        <div class="panel panel-right">
-          <textarea id="outputText" readonly placeholder="翻译"></textarea>
-          <div class="panel-footer">
-            <div class="action-group">
+        <!-- 右侧输出面板 -->
+        <div class="panel">
+          <textarea id="outputText" readonly placeholder="翻译结果"></textarea>
+          <div class="panel-tools">
+            <div class="action-icons">
               <button class="icon-btn" id="listenBtn" title="朗读"><i class="fas fa-volume-up"></i></button>
               <button class="icon-btn" id="copyBtn" title="复制翻译"><i class="fas fa-copy"></i></button>
             </div>
             <span id="outputCount" class="char-count"></span>
           </div>
         </div>
-
       </div>
 
-      <!-- 底部：主按钮 -->
-      <div class="translate-action-bar">
+      <!-- 底部：操作按钮 -->
+      <div class="action-bar">
         <button id="translateBtn" class="translate-btn">
           <div class="loading-spinner" id="loadingSpinner"></div>
-          <span>翻译</span>
-          <i class="fas fa-arrow-right"></i>
+          <span>开始翻译</span>
         </button>
       </div>
 
@@ -386,7 +576,7 @@
 
   <!-- 
   =========================================
-  您的 JavaScript 逻辑 (完全保持原样，与UI交互精准对接)
+  原生 JavaScript 逻辑 (完全保持原样，完美触发所有 API 功能)
   =========================================
   -->
   <script>
@@ -409,7 +599,7 @@
       inputText.addEventListener('input', function () {
         const length = this.value.length;
         inputCount.textContent = `${length} / 5000`;
-        inputCount.style.color = length > 5000 ? '#d93025' : 'var(--text-secondary)';
+        inputCount.style.color = length > 5000 ? '#FF3B30' : 'var(--text-secondary)'; // Apple Red
       });
 
       // 清除输入
@@ -464,8 +654,6 @@
           inputText.value = outputText.value;
           outputText.value = tempText;
           inputText.dispatchEvent(new Event('input'));
-          // Google 风格通常输出框不显示具体字数，但为了保留你的功能这里继续保留
-          outputCount.textContent = `${outputText.value.length} 字`;
         }
       });
 
@@ -491,18 +679,15 @@
 
         loadingSpinner.style.display = 'inline-block';
         translateBtn.querySelector('span').textContent = '翻译中...';
-        translateBtn.querySelector('i').style.display = 'none';
 
         fetch(`https://translateapi.011102.xyz/?text=${encodeURIComponent(text)}&source_language=${source}&target_language=${target}&secret=${secret}`)
           .then(response => response.json())
           .then(data => {
             loadingSpinner.style.display = 'none';
-            translateBtn.querySelector('span').textContent = '翻译';
-            translateBtn.querySelector('i').style.display = 'inline-block';
+            translateBtn.querySelector('span').textContent = '开始翻译';
 
             if (data.code === 0 && data.msg === 'ok') {
               outputText.value = data.text;
-              outputCount.textContent = `${data.text.length} 字`;
 
               translateBtn.classList.add('success');
               setTimeout(() => { translateBtn.classList.remove('success'); }, 1000);
@@ -512,8 +697,7 @@
           })
           .catch(error => {
             loadingSpinner.style.display = 'none';
-            translateBtn.querySelector('span').textContent = '翻译';
-            translateBtn.querySelector('i').style.display = 'inline-block';
+            translateBtn.querySelector('span').textContent = '开始翻译';
             console.error('请求翻译API时发生错误：', error);
             alert('请求翻译API时发生错误，请稍后再试。');
           });
